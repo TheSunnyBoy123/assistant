@@ -1,5 +1,6 @@
 
 import speech_recognition as sr
+import webbrowser
 from gtts import gTTS
 import sys
 from sys import platform
@@ -29,19 +30,28 @@ def record():
         speak(text)
         analysis(text)
 
+def type():
+    pass
+
 def analysis(text):
     text = text.split()
+    #open app
     if "open" in text:
-        for i in range(0, len(text)):
-            if text[i] == "open":
-                app = text[i+1:]
-        a = ""
-        for i in app:
-            if i != app[len(app)-1]:
-                a += i + '\ '
-            else:
-                a+= i
-        os.system("open /Applications/" + a + ".app")
+        if ".com" in text[1]:
+            print("reached")
+            website = text[1]
+            webbrowser.open_new('https://'+website)
+        else:
+            for i in range(0, len(text)):
+                if text[i] == "open":
+                    app = text[i+1:]
+            a = ""
+            for i in app:
+                if i != app[len(app)-1]:
+                    a += i + '\ '
+                else:
+                    a+= i
+            os.system("open /Applications/" + a + ".app")
 
 def start():
     record()
