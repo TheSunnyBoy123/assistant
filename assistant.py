@@ -30,6 +30,8 @@ def record():
         speak(text)
         analysis(text)
 
+
+
 def type():
     pass
 
