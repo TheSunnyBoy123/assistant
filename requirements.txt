@@ -1,5 +1,4 @@
 SpeechRecognition==3.8.1
-import webbrowser
 gTTS==2.2.2
 playsound==1.2.2
 PyAutoGUI==0.9.52
