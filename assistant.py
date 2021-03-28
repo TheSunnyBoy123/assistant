@@ -44,16 +44,20 @@ def analysis(text):
             website = text[1]
             webbrowser.open_new('https://'+website)
         else:
-            for i in range(0, len(text)):
-                if text[i] == "open":
-                    app = text[i+1:]
-            a = ""
-            for i in app:
-                if i != app[len(app)-1]:
-                    a += i + '\ '
-                else:
-                    a+= i
-            os.system("open /Applications/" + a + ".app")
+            if platform == 'darwin':
+                for i in range(0, len(text)):
+                    if text[i] == "open":
+                        app = text[i+1:]
+                a = ""
+                for i in app:
+                    if i != app[len(app)-1]:
+                        a += i + '\ '
+                    else:
+                        a+= i
+                os.system("open /Applications/" + a + ".app")
+            elif platform == 'win32':
+                x = os.system("start " + text[1])
+                print(x)
 
 def start():
     record()
@@ -62,7 +66,7 @@ def start():
 
 
 if __name__ == '__main__':
-    allowed = ['darwin']
+    allowed = ['darwin', 'win32']
     if platform not in allowed:
         tts = gTTS(text = "This program will not work properly with this system, updates coming soon", lang = "en", tld = "ca", slow = "False")
         tts.save("voice.mp3")
