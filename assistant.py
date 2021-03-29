@@ -14,8 +14,7 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import re
 import pyttsx3
-
-
+################################################################################
 
 def speak(text):
     tts = gTTS(text = "I heard" + text, lang = "en", tld = 'ca', slow= False)
@@ -32,37 +31,24 @@ def speaker(text):
 
 def record():
     r = sr.Recognizer()
-
     with sr.Microphone() as source:
         print("Enter")
         audio = r.listen(source)
-
-
         text = r.recognize_google(audio)
         speak(text)
         analysis(text)
 
-
 def record_return():
     r = sr.Recognizer()
-
     with sr.Microphone() as source:
         print("Enter")
         audio = r.listen(source)
-
-
         text = r.recognize_google(audio)
         speak(text)
         return text
 
-
-
-def type():
-    pass
-
 def analysis(text):
     text = text.split()
-    #open app
     if "open" in text:
         if ".com" in text[1]:
             website = text[1]
@@ -116,11 +102,7 @@ def analysis(text):
                 key += text[i]
         print(search)
         link = 'https://en.wikipedia.org/wiki/' + search
-
-        # Specify url of the web page
         source = urlopen(link).read()
-
-        # Make a soup
         soup = BeautifulSoup(source,'lxml')
         soup
         paras = []
@@ -159,12 +141,8 @@ def analysis(text):
         record()
     record()
 
-
 def start():
     record()
-
-
-
 
 if __name__ == '__main__':
     allowed = ['darwin', 'win32']
