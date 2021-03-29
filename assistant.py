@@ -5,6 +5,7 @@ from gtts import gTTS
 import sys
 from sys import platform
 import os
+import subprocess
 import time
 import playsound
 import pyautogui
@@ -40,7 +41,6 @@ def analysis(text):
     #open app
     if "open" in text:
         if ".com" in text[1]:
-            print("reached")
             website = text[1]
             webbrowser.open_new('https://'+website)
         else:
@@ -51,11 +51,31 @@ def analysis(text):
                 a = ""
                 for i in app:
                     if i != app[len(app)-1]:
-                        a += i + '\ '
+                        a += i + ' '
                     else:
                         a+= i
-                os.system("open /Applications/" + a + ".app")
+                res=subprocess.run(["open", "/Applications/" + a + ".app"])
+                print(res.returncode)
+                if res.returncode == 1:
+                    tts = gTTS(text = text[1]+ "was not found on this device please try again or find the correct app name", lang = "en", tld = "ca", slow = "False")
+                    tts.save("voice.mp3")
+                    playsound.playsound("voice.mp3")
+                    record()
+                else:
+                    tts = gTTS(text = "Opening " + a, lang = "en", tld = "ca", slow = "False")
+                    tts.save("voice.mp3")
+                    playsound.playsound("voice.mp3")
             elif platform == 'win32':
+                app = ""
+                for i in range(1, len(text)):
+                    if text[i] == "open":
+                        app == text[i+1:]
+                a = ""
+                for i in app:
+                    if i != app[len(app) - 1]:
+                        a += i+ '\ '
+                    else:
+                        a += i
                 x = os.system("start " + text[1])
                 print(x)
 
