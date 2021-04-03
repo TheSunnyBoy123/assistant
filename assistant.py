@@ -152,3 +152,4 @@ if __name__ == '__main__':
         playsound.playsound("voice.mp3")
         quit()
     start()
+#testing vsc
